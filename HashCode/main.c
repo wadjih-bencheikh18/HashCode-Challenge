@@ -1,28 +1,28 @@
 #include <stdio.h>
 #include <stdlib.h>
-
+typedef char string[31];
 typedef struct
 {
     int Nb_path;
-    char Path[1000][40];
+    string Path[1000];
 }Car;
 typedef struct
 {
     int Debut;
     int Fin;
-    char name[40];
+    char name[31];
     int L;
 }Street;
 typedef struct
 {
-    char Name[40];
+    char Name[31];
     int T;
 }green_light;
 typedef struct
 {
     int Eff;
     int Nb_Street;
-    green_light Streets[10];
+    green_light Streets[1000];
 }Intersection;
 
 
@@ -30,8 +30,8 @@ int main()
 {
     int D,I,F,S,V;
     Car Cars[1000];
-    Intersection Inters[100000];
-    Street Streets[100000];
+    Intersection Inters[10000];
+    Street Streets[10000];
     return 0;
 }
 
