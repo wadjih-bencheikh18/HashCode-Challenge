@@ -165,18 +165,15 @@ int Init(char nomt[20],int *D,int *I,int *S,int *V,int *F,Car *Cars,Street *Stre
         {
             if (fgets(lign, sizeof(lign),f))
             {
-                for (z=0;z<Cars[k].Nb_path;z++)
+                while ( lign[i] != ' ' )
                 {
-                    while ( lign[i] != ' ' )
-                    {
-                        temp[j]=lign[i];
-                        i++;
-                        j++;
-                    }
-                    temp[j]='\0';
-                    Cars[k].Nb_path=atoi(temp);
-                    j=0;
+                    temp[j]=lign[i];
+                    i++;
+                    j++;
                 }
+                temp[j]='\0';
+                Cars[k].Nb_path=atoi(temp);
+                j=0;
                 i++;
                 strcpy(temp,"");
                 for (z=0;z<Cars[k].Nb_path;z++)
