@@ -42,12 +42,14 @@ int Init(char nomt[20],int *D,int *I,int *S,int *V,int *F,Car *Cars,Street *Stre
     int i=0,j=0,k,z;
 
     f = fopen(nomt,"r");
-    if ( f == NULL){
+    if ( f == NULL)
+        {
             printf("Error when opening the file %s\n",nomt);
             return 1;
-    }
+        }
 
     while (!feof(f))
+    {
         if (fgets(lign, sizeof(lign),f))
         {
             while ( lign[i] != ' ' )
@@ -70,7 +72,6 @@ int Init(char nomt[20],int *D,int *I,int *S,int *V,int *F,Car *Cars,Street *Stre
             i++;
             j=0;
             strcpy(temp,"");
-
             while ( lign[i] != ' ' )
             {
                 temp[j]=lign[i];
@@ -117,7 +118,7 @@ int Init(char nomt[20],int *D,int *I,int *S,int *V,int *F,Car *Cars,Street *Stre
                 }
                 temp[j]='\0';
                 Streets[k].Debut=atoi(temp);
-                i=0;
+                i++;
                 j=0;
                 strcpy(temp,"");
                 while ( lign[i] != ' ' )
@@ -128,47 +129,55 @@ int Init(char nomt[20],int *D,int *I,int *S,int *V,int *F,Car *Cars,Street *Stre
                 }
                 temp[j]='\0';
                 Streets[k].Fin=atoi(temp);
-                i=0;
+                i++;
                 j=0;
                 strcpy(temp,"");
-                while ( lign[i] != ' ' )
+                for (z=0;z<*S;z++)
                 {
-                j=0;
+                    while ( lign[i] != ' ' )
+                    {
+                        temp[j]=lign[i];
+                        i++;
+                        j++;
+                    }
+                    temp[j]='\0';
+                    strcpy(Streets[k].name,temp);
+                    j=0;
+                }
+                i++;
                 strcpy(temp,"");
+                for (z=0;z<*S;z++)
+                {
+                    while ( lign[i] != ' ' )
+                    {
+                        temp[j]=lign[i];
+                        i++;
+                        j++;
+                    }
+                    temp[j]='\0';
+                    Streets[k].L=atoi(temp);
+                    j=0;
+                }
+                i=0;
             }
         }
         for (k=0;k<*V;k++)
         {
             if (fgets(lign, sizeof(lign),f))
             {
-                while ( lign[i] != ' ' )
+                for (z=0;z<Cars[k].Nb_path;z++)
                 {
-                    temp[j]=lign[i];
-                    i++;
-                    j++;
-                    temp[j]=lign[i];
-                    i++;
-                    j++;
+                    while ( lign[i] != ' ' )
+                    {
+                        temp[j]=lign[i];
+                        i++;
+                        j++;
+                    }
+                    temp[j]='\0';
+                    Cars[k].Nb_path=atoi(temp);
+                    j=0;
                 }
-                temp[j]='\0';
-                strcpy(Streets[k].name,temp);
-                i=0;
-                j=0;
-                strcpy(temp,"");
-                while ( lign[i] != ' ' )
-                {
-                    temp[j]=lign[i];
-                    i++;
-                    j++;
-                }
-                temp[j]='\0';
-                Streets[k].L=atoi(temp);
-                i=0;
-                }
-                temp[j]='\0';
-                Cars[k].Nb_path=atoi(temp);
-                i=0;
-                j=0;
+                i++;
                 strcpy(temp,"");
                 for (z=0;z<Cars[k].Nb_path;z++)
                 {
@@ -186,6 +195,7 @@ int Init(char nomt[20],int *D,int *I,int *S,int *V,int *F,Car *Cars,Street *Stre
                 strcpy(temp,"");
             }
         }
+    }
     fclose(f);
     return 0;
 }
