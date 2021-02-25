@@ -181,7 +181,7 @@ int Init(char nomt[20],int *D,int *I,int *S,int *V,int *F,Car *Cars,Street *Stre
                 strcpy(temp,"");
                 for (z=0;z<Cars[k].Nb_path;z++)
                 {
-                    while ( (lign[i] != ' ') || (lign[i] != '\n') )
+                    while ( (lign[i] != ' ') && (lign[i] != '\n') )
                     {
                         temp[j]=lign[i];
                         i++;
