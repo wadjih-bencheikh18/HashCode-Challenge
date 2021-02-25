@@ -4,7 +4,7 @@ typedef char string[31];
 typedef struct
 {
     int Nb_path;
-    string Path[1000];
+    string Path[100];
 }Car;
 typedef struct
 {
@@ -15,38 +15,36 @@ typedef struct
 }Street;
 typedef struct
 {
-    char Name[31];
+    int Nb;
     int T;
 }green_light;
 typedef struct
 {
     int Eff;
     int Nb_Street;
-    green_light Streets[1000];
+    green_light Streets[100];
 }Intersection;
 
 
 int main()
 {
     int D,I,F,S,V;
-    Car Cars[1000];
-    Intersection Inters[10000];
-    Street Streets[10000];
+    Car Cars[100];
+    Intersection Inters[100];
+    Street Streets[100];
+    Init("a.txt",&D,&I,&S,&V,&F,Cars,Streets);
     return 0;
 }
 
 int Init(char nomt[20],int *D,int *I,int *S,int *V,int *F,Car *Cars,Street *Streets) ///affecter les val du fich au var
 {
-    FILE *f = NULL;
-    char lign[256],temp[10];
+    FILE *f = fopen(nomt,"r");;
+    char lign[1000],temp[20];
     int i=0,j=0,k,z;
-
-    f = fopen(nomt,"r");
-    if ( f == NULL)
-        {
+    if ( f == NULL){
             printf("Error when opening the file %s\n",nomt);
             return 1;
-        }
+    }
 
     while (!feof(f))
     {
@@ -72,6 +70,7 @@ int Init(char nomt[20],int *D,int *I,int *S,int *V,int *F,Car *Cars,Street *Stre
             i++;
             j=0;
             strcpy(temp,"");
+
             while ( lign[i] != ' ' )
             {
                 temp[j]=lign[i];
@@ -94,7 +93,7 @@ int Init(char nomt[20],int *D,int *I,int *S,int *V,int *F,Car *Cars,Street *Stre
             i++;
             j=0;
             strcpy(temp,"");
-            while ( lign[i] != ' ' )
+            while ( (lign[i] != ' ')&& (lign[i] != '\n'))
             {
                 temp[j]=lign[i];
                 i++;
@@ -132,39 +131,33 @@ int Init(char nomt[20],int *D,int *I,int *S,int *V,int *F,Car *Cars,Street *Stre
                 i++;
                 j=0;
                 strcpy(temp,"");
-                for (z=0;z<*S;z++)
+                while ( lign[i] != ' ' )
                 {
-                    while ( lign[i] != ' ' )
-                    {
-                        temp[j]=lign[i];
-                        i++;
-                        j++;
-                    }
-                    temp[j]='\0';
-                    strcpy(Streets[k].name,temp);
-                    j=0;
+                    temp[j]=lign[i];
+                    i++;
+                    j++;
                 }
+                strcpy(Streets[k].name,temp);
                 i++;
+                j=0;
                 strcpy(temp,"");
-                for (z=0;z<*S;z++)
+                while ( (lign[i] != ' ')&& (lign[i] != '\n'))
                 {
-                    while ( lign[i] != ' ' )
-                    {
-                        temp[j]=lign[i];
-                        i++;
-                        j++;
-                    }
-                    temp[j]='\0';
-                    Streets[k].L=atoi(temp);
-                    j=0;
+                    temp[j]=lign[i];
+                    i++;
+                    j++;
                 }
+                Streets[k].L=atoi(temp);
+                j=0;
                 i=0;
-            }
+                }
         }
         for (k=0;k<*V;k++)
         {
             if (fgets(lign, sizeof(lign),f))
             {
+                i=0;
+                strcpy(temp,"");
                 while ( lign[i] != ' ' )
                 {
                     temp[j]=lign[i];
@@ -173,28 +166,27 @@ int Init(char nomt[20],int *D,int *I,int *S,int *V,int *F,Car *Cars,Street *Stre
                 }
                 temp[j]='\0';
                 Cars[k].Nb_path=atoi(temp);
-                j=0;
                 i++;
-                strcpy(temp,"");
+                j=0;
+
                 for (z=0;z<Cars[k].Nb_path;z++)
                 {
-                    while ( (lign[i] != ' ') && (lign[i] != '\n') )
+                    strcpy(temp,"");
+                    while ( (lign[i] != ' ')&& (lign[i] != '\n'))
                     {
                         temp[j]=lign[i];
                         i++;
                         j++;
                     }
                     temp[j]='\0';
+                    i++;
                     strcpy(Cars[k].Path[z],temp);
                     j=0;
                 }
-                i=0;
-                strcpy(temp,"");
             }
         }
-    }
-    fclose(f);
-    return 0;
+}
+ fclose(f);
 }
 
 void init_submision(Intersection *inters,Street *Streets,int S,int I,int D)
@@ -208,7 +200,7 @@ void init_submision(Intersection *inters,Street *Streets,int S,int I,int D)
     {
         if (inters[Streets[k].Debut].Eff==1) inters[Streets[k].Debut].Eff=0;
         if (inters[Streets[k].Fin].Eff==1) inters[Streets[k].Fin].Eff=0;
-        strcpy(inters[Streets[k].Fin].Streets[inters[Streets[k].Fin].Nb_Street].Name,Streets[k].name);
+        inters[Streets[k].Fin].Streets[inters[Streets[k].Fin].Nb_Street].Nb=k;
         inters[Streets[k].Fin].Streets[inters[Streets[k].Fin].Nb_Street].T=rand()%(D+1);
         inters[Streets[k].Fin].Nb_Street=inters[Streets[k].Fin].Nb_Street+1;
     }
