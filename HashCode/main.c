@@ -22,7 +22,7 @@ typedef struct
 {
     int Eff;
     int Nb_Street;
-    green_light Streets[100000];
+    green_light Streets[10];
 }Intersection;
 
 
@@ -32,7 +32,6 @@ int main()
     Car Cars[1000];
     Intersection Inters[100000];
     Street Streets[100000];
-    printf("Hello world!\n");
     return 0;
 }
 
@@ -134,6 +133,19 @@ int Init(char nomt[20],int *D,int *I,int *S,int *V,int *F,Car *Cars,Street *Stre
                 strcpy(temp,"");
                 while ( lign[i] != ' ' )
                 {
+                j=0;
+                strcpy(temp,"");
+            }
+        }
+        for (k=0;k<*V;k++)
+        {
+            if (fgets(lign, sizeof(lign),f))
+            {
+                while ( lign[i] != ' ' )
+                {
+                    temp[j]=lign[i];
+                    i++;
+                    j++;
                     temp[j]=lign[i];
                     i++;
                     j++;
@@ -152,19 +164,6 @@ int Init(char nomt[20],int *D,int *I,int *S,int *V,int *F,Car *Cars,Street *Stre
                 temp[j]='\0';
                 Streets[k].L=atoi(temp);
                 i=0;
-                j=0;
-                strcpy(temp,"");
-            }
-        }
-        for (k=0;k<*V;k++)
-        {
-            if (fgets(lign, sizeof(lign),f))
-            {
-                while ( lign[i] != ' ' )
-                {
-                    temp[j]=lign[i];
-                    i++;
-                    j++;
                 }
                 temp[j]='\0';
                 Cars[k].Nb_path=atoi(temp);
@@ -189,4 +188,21 @@ int Init(char nomt[20],int *D,int *I,int *S,int *V,int *F,Car *Cars,Street *Stre
         }
     fclose(f);
     return 0;
+}
+
+void init_submision(Intersection *inters,Street *Streets,int S,int I,int D)
+{
+    for(int k=0;k<I;k++)
+    {
+        inters[k].Eff=1;
+        inters[k].Nb_Street=0;
+    }
+    for(int k=0;k<S;k++)
+    {
+        if (inters[Streets[k].Debut].Eff==1) inters[Streets[k].Debut].Eff=0;
+        if (inters[Streets[k].Fin].Eff==1) inters[Streets[k].Fin].Eff=0;
+        strcpy(inters[Streets[k].Fin].Streets[inters[Streets[k].Fin].Nb_Street].Name,Streets[k].name);
+        inters[Streets[k].Fin].Streets[inters[Streets[k].Fin].Nb_Street].T=rand()%(D+1);
+        inters[Streets[k].Fin].Nb_Street=inters[Streets[k].Fin].Nb_Street+1;
+    }
 }
