@@ -4,7 +4,7 @@ typedef char string[31];
 typedef struct
 {
     int Nb_path;
-    string Path[1000];
+    string Path[100];
 }Car;
 typedef struct
 {
@@ -22,7 +22,7 @@ typedef struct
 {
     int Eff;
     int Nb_Street;
-    green_light Streets[1000];
+    green_light Streets[100];
 }Intersection;
 
 
@@ -93,7 +93,7 @@ int Init(char nomt[20],int *D,int *I,int *S,int *V,int *F,Car *Cars,Street *Stre
             i++;
             j=0;
             strcpy(temp,"");
-            while ( lign[i] != ' ' )
+            while ( (lign[i] != ' ')&& (lign[i] != '\n'))
             {
                 temp[j]=lign[i];
                 i++;
@@ -141,7 +141,7 @@ int Init(char nomt[20],int *D,int *I,int *S,int *V,int *F,Car *Cars,Street *Stre
                 i++;
                 j=0;
                 strcpy(temp,"");
-                while ( lign[i] != ' ' )
+                while ( (lign[i] != ' ')&& (lign[i] != '\n'))
                 {
                     temp[j]=lign[i];
                     i++;
@@ -172,21 +172,21 @@ int Init(char nomt[20],int *D,int *I,int *S,int *V,int *F,Car *Cars,Street *Stre
                 for (z=0;z<Cars[k].Nb_path;z++)
                 {
                     strcpy(temp,"");
-                    while ( lign[i] != ' ' )
+                    while ( (lign[i] != ' ')&& (lign[i] != '\n'))
                     {
                         temp[j]=lign[i];
                         i++;
                         j++;
                     }
                     temp[j]='\0';
+                    i++;
                     strcpy(Cars[k].Path[z],temp);
                     j=0;
                 }
             }
         }
-    fclose(f);
-    return 0;
 }
+ fclose(f);
 }
 
 void init_submision(Intersection *inters,Street *Streets,int S,int I,int D)
