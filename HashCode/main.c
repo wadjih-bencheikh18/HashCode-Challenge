@@ -33,6 +33,8 @@ int main()
     Intersection Inters[100];
     Street Streets[100];
     Init("a.txt",&D,&I,&S,&V,&F,Cars,Streets);
+    init_submission(Inters,Streets,S,I,D);
+    Create_inter(Inters,Streets,I);
     return 0;
 }
 
@@ -189,7 +191,7 @@ int Init(char nomt[20],int *D,int *I,int *S,int *V,int *F,Car *Cars,Street *Stre
  fclose(f);
 }
 
-void init_submision(Intersection *inters,Street *Streets,int S,int I,int D)
+void init_submission(Intersection *inters,Street *Streets,int S,int I,int D)
 {
     for(int k=0;k<I;k++)
     {
@@ -204,4 +206,20 @@ void init_submision(Intersection *inters,Street *Streets,int S,int I,int D)
         inters[Streets[k].Fin].Streets[inters[Streets[k].Fin].Nb_Street].T=rand()%(D+1);
         inters[Streets[k].Fin].Nb_Street=inters[Streets[k].Fin].Nb_Street+1;
     }
+}
+void Create_inter(Intersection *inters,Street *Streets,int I)
+{
+    FILE *f=fopen("insertion.txt","w");
+    fprintf(f,"%d\n",I);
+    for(int k=0;k<I;k++)
+    {
+        fprintf(f,"%d\n",k);
+        fprintf(f,"%d\n",inters[k].Nb_Street);
+        for(int x=0;x<inters[k].Nb_Street;x++)
+        {
+            fprintf(f,"%s %d\n",Streets[inters[k].Streets[x].Nb].name,inters[k].Streets[x].T);
+        }
+
+    }
+    fclose(f);
 }
