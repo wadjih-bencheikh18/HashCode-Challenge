@@ -5,10 +5,10 @@ rue-de-londres 6
 1
 2
 rue-d-amsterdam 1
-rue-d-athenesam 6
+rue-d-athenes 6
 2
 1
-rue-de-moscouam 3
+rue-de-moscou 3
 3
 1
-rue-de-romeesam 5
+rue-de-rome 5

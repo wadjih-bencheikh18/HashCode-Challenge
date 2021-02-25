@@ -139,6 +139,7 @@ int Init(char nomt[20],int *D,int *I,int *S,int *V,int *F,Car *Cars,Street *Stre
                     i++;
                     j++;
                 }
+                temp[j]='\0';
                 strcpy(Streets[k].name,temp);
                 i++;
                 j=0;
